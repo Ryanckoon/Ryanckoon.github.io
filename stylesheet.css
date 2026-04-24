@@ -27,8 +27,9 @@
   --color-cornell-red:     #B31B1B;   /* reserved: awards, signature moment */
 
   /* Typography */
-  --font-serif:  "Palatino Linotype", Palatino, "Book Antiqua", "TeX Gyre Pagella", Georgia, serif;
-  --font-label:  -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-serif:         "Palatino Linotype", Palatino, "Book Antiqua", "TeX Gyre Pagella", Georgia, serif;
+  --font-display-sans:  "Helvetica Neue", Helvetica, Arial, sans-serif;  /* name only — NYC-subway register */
+  --font-label:         -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
 
   --text-micro:     0.75rem;   /* 12px */
   --text-small:     0.875rem;  /* 14px */
@@ -147,12 +148,12 @@ ul, ol { list-style: none; }
 .hero-text { flex: 1; min-width: 0; }
 
 .name {
-  font-family: var(--font-serif);
+  font-family: var(--font-display-sans);
   font-size: var(--text-display);
-  font-weight: 400;
-  font-style: italic;
-  letter-spacing: -0.01em;
-  line-height: 1.05;
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
   margin-bottom: var(--space-md);
   color: var(--color-text);
 }
@@ -237,7 +238,7 @@ ul, ol { list-style: none; }
   font-family: var(--font-serif);
   font-size: var(--text-section);
   font-style: italic;
-  font-weight: 400;
+  font-weight: 700;
   margin-bottom: var(--space-lg);
   color: var(--color-text);
 }
@@ -357,10 +358,41 @@ ul, ol { list-style: none; }
 }
 
 .pub {
+  display: flex;
+  gap: var(--space-lg);
   padding-bottom: var(--space-md);
   border-bottom: 1px solid var(--color-border);
 }
 .pub:last-child { border-bottom: 0; }
+
+.pub-image {
+  flex-shrink: 0;
+  width: 150px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background: var(--color-border);
+  margin-top: 0.3rem;
+}
+
+/* Placeholder variant — muted block with a soft dashed border, zero content. */
+.pub-image--placeholder {
+  background: var(--color-border-light, #efede8);
+  border: 1px dashed var(--color-border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-label);
+  font-size: var(--text-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+
+.pub-content {
+  flex: 1;
+  min-width: 0;
+}
 
 .pub-title {
   font-size: var(--text-subtitle);
@@ -547,6 +579,8 @@ ul, ol { list-style: none; }
   .timeline-item { flex-wrap: wrap; gap: var(--space-md); }
   .timeline-date { width: 100%; padding-top: 0; order: 3; }
   .kv-list { grid-template-columns: 1fr; gap: 0.25rem; }
+  .pub { flex-direction: column; gap: var(--space-md); }
+  .pub-image { width: 100%; aspect-ratio: 16 / 9; }
 }
 
 /* --- Reduced motion --- */

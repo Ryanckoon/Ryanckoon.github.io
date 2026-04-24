@@ -12,4 +12,4 @@ Pure static HTML + CSS — no build step, no framework. Deployed via GitHub Page
 - `favicon/` — favicon assets
 - `.nojekyll` — tells GitHub Pages to skip Jekyll processing
 
-**Editing:** see [`MAINTENANCE.md`](MAINTENANCE.md) for step-by-step recipes (add an experience, change a color, write a new blog post, swap the profile photo).
+**Editing:** the maintenance guide is kept privately at `/Users/ruihuaguo/Website/MAINTENANCE.md` (not in this repo).
