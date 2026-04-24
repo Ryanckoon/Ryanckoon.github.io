@@ -52,10 +52,11 @@
       </div>
 
       <div class="hero-photo">
-        <!-- EDIT: drop your photo at images/profile.jpg (jpg or png), then remove the .monogram div below
-             and uncomment the <img>. See MAINTENANCE.md §"Swap the profile photo". -->
-        <!-- <img src="images/profile.jpg" alt="Ruihua Guo" class="profile-img"> -->
-        <img src="images/profile/profile.jpg" alt="Ruihua Guo" class="profile-img">
+        <!-- Profile photo rotates on every page load. The JS near the end of <body>
+             cycles through the files listed in `profileImages`. To add a new photo:
+             drop it in images/profile/ and add its filename to the array. -->
+        <img id="profileImage" alt="Ruihua Guo" class="profile-img"
+             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
       </div>
     </header>
 
@@ -74,14 +75,14 @@
     </section>
 
     <!-- ============ EDUCATION ============ -->
-    <!-- EDIT: timeline-item blocks. Logos: drop files into images/logos/<school>.png
-         and replace the .timeline-logo--mono div with <img src="images/logos/nus.png" class="timeline-logo" alt="NUS">. -->
+    <!-- EDIT: timeline-item blocks. Logos: drop files into images/logo/<school>.png
+         and replace the .timeline-logo--mono div with <img src="images/logo/nus.png" class="timeline-logo" alt="NUS">. -->
     <section class="section" id="education" aria-labelledby="edu-title">
       <h2 class="section-title" id="edu-title">Education</h2>
       <div class="timeline">
 
         <div class="timeline-item">
-          <img src="images/logos/nus.png" alt="National University of Singapore" class="timeline-logo">
+          <img src="images/logo/nus.png" alt="National University of Singapore" class="timeline-logo">
           <div class="timeline-content">
             <h3>National University of Singapore, Business School</h3>
             <p class="timeline-role">Ph.D. in Real Estate</p>
@@ -91,7 +92,7 @@
         </div>
 
         <div class="timeline-item">
-          <img src="images/logos/cornell.png" alt="Cornell University" class="timeline-logo">
+          <img src="images/logo/cornell.png" alt="Cornell University" class="timeline-logo">
           <div class="timeline-content">
             <h3>Cornell University, Charles H. Dyson School</h3>
             <p class="timeline-role">M.S. in Applied Economics and Management</p>
@@ -101,7 +102,7 @@
         </div>
 
         <div class="timeline-item">
-          <img src="images/logos/cau.png" alt="China Agricultural University" class="timeline-logo">
+          <img src="images/logo/cau.png" alt="China Agricultural University" class="timeline-logo">
           <div class="timeline-content">
             <h3>China Agricultural University</h3>
             <p class="timeline-role">B.Econ. in International Economics and Trade</p>
@@ -174,7 +175,7 @@
       <div class="timeline">
 
         <div class="timeline-item">
-          <img src="images/logos/nus.png" alt="National University of Singapore" class="timeline-logo">
+          <img src="images/logo/nus.png" alt="National University of Singapore" class="timeline-logo">
           <div class="timeline-content">
             <h3>NUS Business School</h3>
             <ul class="timeline-sub">
@@ -187,7 +188,7 @@
         </div>
 
         <div class="timeline-item">
-          <img src="images/logos/cornell.png" alt="Cornell University" class="timeline-logo">
+          <img src="images/logo/cornell.png" alt="Cornell University" class="timeline-logo">
           <div class="timeline-content">
             <h3>S.C. Johnson College of Business, Cornell</h3>
             <ul class="timeline-sub">
@@ -206,7 +207,7 @@
       <div class="timeline">
 
         <div class="timeline-item">
-          <img src="images/logos/tsinghua.png" alt="Tsinghua University" class="timeline-logo">
+          <img src="images/logo/thu.png" alt="Tsinghua University" class="timeline-logo">
           <div class="timeline-content">
             <h3>Institute of Energy, Environment, and Economy, Tsinghua University</h3>
             <p class="timeline-role">Research Assistant &middot; Advised by Prof. Hailin Wang</p>
@@ -216,7 +217,7 @@
         </div>
 
         <div class="timeline-item">
-          <img src="images/logos/tsinghua.png" alt="Tsinghua University" class="timeline-logo">
+          <img src="images/logo/thu.png" alt="Tsinghua University" class="timeline-logo">
           <div class="timeline-content">
             <h3>Energy Internet Research Institute, Tsinghua University</h3>
             <p class="timeline-role">Carbon Emission Research Intern</p>
@@ -226,7 +227,7 @@
         </div>
 
         <div class="timeline-item">
-          <img src="images/logos/cornell.png" alt="Cornell University" class="timeline-logo">
+          <img src="images/logo/cornell.png" alt="Cornell University" class="timeline-logo">
           <div class="timeline-content">
             <h3>Cornell Institute for China Economic Research (CICER)</h3>
             <p class="timeline-role">Winter Research Project &middot; Advised by Dr. Binglin Wang and Prof. Shanjun Li</p>
@@ -244,7 +245,7 @@
       <div class="timeline">
 
         <div class="timeline-item">
-          <img src="images/logos/fs.png" alt="Frankfurt School of Finance & Management" class="timeline-logo">
+          <img src="images/logo/fs.png" alt="Frankfurt School of Finance & Management" class="timeline-logo">
           <div class="timeline-content">
             <h3>Frankfurt School of Finance &amp; Management</h3>
             <p class="timeline-role">Assistant Consultant &middot; Development Finance / Green Finance</p>
@@ -258,7 +259,7 @@
         </div>
 
         <div class="timeline-item">
-          <img src="images/logos/ruc.png" alt="Renmin University of China" class="timeline-logo">
+          <img src="images/logo/ruc.png" alt="Renmin University of China" class="timeline-logo">
           <div class="timeline-content">
             <h3>Fintech Institute, Renmin University of China</h3>
             <p class="timeline-role">Research Assistant Intern &middot; Bank Technology Group</p>
@@ -305,5 +306,30 @@
     </footer>
 
   </main>
+
+  <script>
+    // Cycle through profile photos. Each page load (or refresh) picks the next image
+    // in the list, wrapping around at the end. Preference is persisted in localStorage
+    // so you don't see the same photo twice in a row on the same browser.
+    //
+    // To add a new profile photo:
+    //   1. Drop the file into images/profile/
+    //   2. Append its filename here (keep existing order; new photos go at the end).
+    (function () {
+      const profileImages = [
+        'images/profile/profile.jpg',
+        'images/profile/profile2.jpg',
+        'images/profile/profile3.jpg',
+        'images/profile/profile4.jpg',
+        'images/profile/profile5.jpg',
+      ];
+      const key = 'rg.lastProfileIdx';
+      const last = parseInt(localStorage.getItem(key), 10);
+      const next = Number.isFinite(last) ? (last + 1) % profileImages.length : 0;
+      localStorage.setItem(key, String(next));
+      const img = document.getElementById('profileImage');
+      if (img) img.src = profileImages[next];
+    })();
+  </script>
 </body>
 </html>
