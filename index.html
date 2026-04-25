@@ -14,7 +14,7 @@
   <meta property="og:url" content="https://ryanckoon.github.io/">
 
   <link rel="stylesheet" href="stylesheet.css">
-  <link rel="icon" href="favicon/favicon.svg" type="image/svg+xml">
+  <link rel="icon" type="image/png" href="favicon/website.png">
 </head>
 
 <body>
@@ -26,7 +26,7 @@
     <!-- EDIT: bio, info list, social links. Photo lives in images/profile.jpg. -->
     <header class="hero">
       <div class="hero-text">
-        <h1 class="name">Ruihua Guo<span class="mark">.</span></h1>
+        <h1 class="name" aria-label="Ruihua Guo"><span class="name-typed" data-text="Ruihua Guo">Ruihua Guo</span><span class="name-caret" aria-hidden="true"></span><span class="mark">.</span></h1>
 
         <p class="bio">
           Hi there! I'm Ruihua, and you can call me Ryan. I am a Ph.D. student in Real Estate at the <a href="https://bschool.nus.edu.sg/">NUS Business School</a>, National University of Singapore. My research focuses on the intersection of urban and environmental economics. I apply data-driven empirical methods, including econometrics, causal inference, and machine learning, to address research questions in these fields.
@@ -117,8 +117,8 @@
     <!-- ============ RESEARCH INTERESTS ============ -->
     <section class="section" id="interests" aria-labelledby="interests-title">
       <h2 class="section-title" id="interests-title">Research Interests</h2>
-      <p class="section-intro">
-        Urban Economics &middot; Environmental Economics &middot; Industrial Organization &middot; Causal Inference
+      <p class="section-intro interests-list">
+        <span>Urban Economics</span><span class="sep" aria-hidden="true"></span><span>Environmental Economics</span><span class="sep" aria-hidden="true"></span><span>Industrial Organization</span><span class="sep" aria-hidden="true"></span><span>Causal Inference</span>
       </p>
     </section>
 
@@ -133,9 +133,6 @@
       <div class="pub-list">
 
         <article class="pub">
-          <!-- EDIT: drop a picture at images/works/weathering-the-storm.jpg and replace the placeholder below with:
-               <img class="pub-image" src="images/works/weathering-the-storm.jpg" alt="A figure or photo that characterizes the work"> -->
-          <img class="pub-image" src="images/works/weathering-the-storm.png" alt="DID results">
           <div class="pub-content">
             <h3 class="pub-title">Weathering the Storm: Urban Consumption Responses and Resilience to Tropical Cyclones in China</h3>
             <p class="pub-authors"><strong>Ruihua Guo</strong>, Binglin Wang</p>
@@ -145,24 +142,14 @@
               CAERE 5th Annual Conference 2026 &middot;
               CES China Annual Conference 2026
             </p>
-            <details class="pub-toggle">
-              <summary>Abstract</summary>
-              <p>This study examines how tropical cyclones affect daily urban consumer spending in China. Using China UnionPay transaction data from 2011 to 2018 and a stacked difference-in-differences framework, the analysis traces daily consumption dynamics. Results indicate that cyclone landfall causes a decline in transaction counts and values. Spending recovers within three days, suggesting urban economic resilience. The paper documents intertemporal consumption substitution where residents shift purchases forward in anticipation of storms. This anticipatory response is present in restaurant, supermarket and pharmacy spending. Cities hit during initial landfall show larger consumption responses compared to those affected as storms move inland. These findings demonstrate that early warning systems facilitate household-level adaptive behavior. By enabling pre-storm stockpiling, meteorological forecasts help reduce the economic costs of disaster disruption. This research highlights the role of information infrastructure in urban resilience to extreme weather.</p>
-            </details>
           </div>
         </article>
 
         <article class="pub">
-          <!-- EDIT: drop a picture at images/works/shared-transport-la.jpg and replace the placeholder below. -->
-          <img class="pub-image" src="images/works/r2pt.png" alt="MOD Project DID results">
           <div class="pub-content">
             <h3 class="pub-title">How Subsidized Shared Transport Shapes Urban Mobility Patterns: Evidence from Cellphone Mobility Data in Los Angeles</h3>
             <p class="pub-authors"><strong>Ruihua Guo</strong>, Jingwei Zhang, Wengdong Zhang</p>
             <p class="pub-venue"><em>Working paper</em></p>
-            <details class="pub-toggle">
-              <summary>Abstract</summary>
-              <p>We are studying the impacts of subsidized shared transport services on visitations and consumption of affected POIs in Los Angeles, based on more than 45 million cell phone mobility data from 2018 to 2022, and conducting DiD methods to analyze the causal effects.</p>
-            </details>
           </div>
         </article>
 
@@ -184,7 +171,7 @@
       </div>
 
       <div class="teaching-group">
-        <h3>S.C. Johnson College of Business, Cornell</h3>
+        <h3>S.C. Johnson College of Business, Cornell University</h3>
         <ul class="timeline-sub">
           <li><em>AEM5275 Introduction to Machine Learning in Business</em> &middot; Course Assistant &middot; 2025</li>
         </ul>
@@ -274,7 +261,7 @@
         <dd>MATLAB &middot; QGIS &middot; SPSS</dd>
 
         <dt>Languages</dt>
-        <dd>Chinese (Native: Lower Yangtze Mandarin) &middot; English (Fluent) &middot; Japanese (Basic)</dd>
+        <dd>Chinese (Native) &middot; English (Fluent) &middot; Japanese (Basic)</dd>
 
         <dt>Hobbies</dt>
         <dd>Traveling &middot; music &middot; painting &middot; fitness</dd>
@@ -311,6 +298,44 @@
       localStorage.setItem(key, String(next));
       const img = document.getElementById('profileImage');
       if (img) img.src = profileImages[next];
+    })();
+
+    // Typed-name effect for the hero h1. Honors prefers-reduced-motion: full
+    // text appears instantly, no caret animation. The Cornell-red period is
+    // visible by default in CSS — this script hides it while typing.
+    (function () {
+      const el = document.querySelector('.name-typed');
+      const caret = document.querySelector('.name-caret');
+      const mark = document.querySelector('.name .mark');
+      if (!el) return;
+      const text = el.dataset.text || '';
+      const reduce = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) {
+        el.textContent = text;
+        if (caret) caret.style.display = 'none';
+        return;
+      }
+      el.textContent = '';
+      if (mark) mark.classList.add('mark--hidden');
+      let i = 0;
+      const step = 80; // ms per character — bigger = slower
+      function tick() {
+        if (i <= text.length) {
+          el.textContent = text.slice(0, i);
+          i += 1;
+          setTimeout(tick, step);
+        } else {
+          if (mark) {
+            mark.classList.remove('mark--hidden');
+            mark.classList.add('mark--visible');
+          }
+          if (caret) {
+            setTimeout(() => caret.classList.add('name-caret--done'), 900);
+          }
+        }
+      }
+      tick();
     })();
   </script>
 </body>
