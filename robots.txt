@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /images/
 
 Sitemap: https://ryanckoon.github.io/sitemap.xml
