@@ -11,5 +11,3 @@ Pure static HTML + CSS — no build step, no framework. Deployed via GitHub Page
 - `pdf/` — CV and other downloads
 - `favicon/` — favicon assets
 - `.nojekyll` — tells GitHub Pages to skip Jekyll processing
-
-**Editing:** the maintenance guide is kept privately at `/Users/ruihuaguo/Website/MAINTENANCE.md` (not in this repo).
