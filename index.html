@@ -61,9 +61,33 @@
 
   <main id="main" class="container">
 
+    <!-- ============ STICKY TOP HEADER ============ -->
+    <!-- Sits flush at the top of the page from page load and stays pinned while scrolling.
+         Brand label on the left, section anchors on the right. The active link is marked
+         with aria-current="true" by the IntersectionObserver script at the end of <body>. -->
+    <nav class="site-nav" aria-label="Section navigation">
+      <a href="#main" class="brand">Ruihua Guo<span class="brand-mark">.</span></a>
+      <div class="nav-links">
+        <a href="#news">News</a>
+        <a href="#education">Education</a>
+        <a href="#works">Works</a>
+        <a href="#teaching">Teaching</a>
+        <a href="#research">Research</a>
+        <a href="#industry">Industry</a>
+        <a href="#awards">Awards</a>
+        <a href="#skills">Skills</a>
+      </div>
+    </nav>
+
     <!-- ============ HERO ============ -->
-    <!-- EDIT: bio, info list, social links. Photo lives in images/profile.jpg. -->
+    <!-- Centered hero. Photo on top, name, bio, identity chips, social links.
+         To swap the rotating photos see the JS near the end of <body>. -->
     <header class="hero">
+      <div class="hero-photo">
+        <img id="profileImage" alt="Ruihua Guo" class="profile-img"
+             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+      </div>
+
       <div class="hero-text">
         <h1 class="name" aria-label="Ruihua Guo"><span class="name-typed" data-text="Ruihua Guo">Ruihua Guo</span><span class="name-caret" aria-hidden="true"></span><span class="mark">.</span></h1>
 
@@ -81,31 +105,13 @@
 
         <hr class="hero-rule" aria-hidden="true">
 
-        <style>
-  .info-list {
-    list-style: none; 
-    padding: 0;
-  }
-
-  .info-list li {
-    display: flex;
-    margin-bottom: 8px; 
-  }
-
-  .info-label {
-    width: 100px;       
-    flex-shrink: 0;     
-    font-weight: bold;  
-  }
-</style>
-
-<ul class="info-list">
-  <li><span class="info-label">Program</span> <span>Ph.D. in Real Estate</span></li>
-  <li><span class="info-label">Dept</span> <a href="https://bschool.nus.edu.sg/real-estate/">Department of Real Estate, NUS Business School</a></li>
-  <li><span class="info-label">Office</span> <span>BIZ 2, 1 Business Link, Singapore 117592</span></li>
-  <li><span class="info-label">Email</span> <span>ruihua.g [at] u.nus.edu</span></li>
-  <li><span class="info-label">Pronouns</span> <span>they/them</span></li>
-</ul>
+        <div class="info-chips" aria-label="Affiliation and identity">
+          <span class="chip">Ph.D. in Real Estate</span>
+          <span class="chip"><a href="https://bschool.nus.edu.sg/real-estate/">NUS Business School</a></span>
+          <span class="chip">BIZ 2, Singapore 117592</span>
+          <span class="chip">ruihua.g [at] u.nus.edu</span>
+          <span class="chip">they/them</span>
+        </div>
 
         <nav class="social-links" aria-label="Profiles and links">
           <a href="mailto:ruihua.g@u.nus.edu">Email</a>
@@ -116,29 +122,7 @@
           <a href="blog/">Blog</a>
         </nav>
       </div>
-
-      <div class="hero-photo">
-        <!-- Profile photo rotates on every page load. The JS near the end of <body>
-             cycles through the files listed in `profileImages`. To add a new photo:
-             drop it in images/profile/ and add its filename to the array. -->
-        <img id="profileImage" alt="Ruihua Guo" class="profile-img"
-             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
-      </div>
     </header>
-
-    <!-- ============ STICKY SECTION NAV ============ -->
-    <!-- Sits just below the hero in natural flow; sticks to viewport top once scrolled past.
-         Smooth-scroll behavior is enabled globally on <html>. -->
-    <nav class="site-nav" aria-label="Section navigation">
-      <a href="#news">News</a>
-      <a href="#education">Education</a>
-      <a href="#works">Works</a>
-      <a href="#teaching">Teaching</a>
-      <a href="#research">Research</a>
-      <a href="#industry">Industry</a>
-      <a href="#awards">Awards</a>
-      <a href="#skills">Skills</a>
-    </nav>
 
     <!-- ============ NEWS ============ -->
     <!-- EDIT: add newest items at the top. Keep <time> in YYYY-MM format.
@@ -197,9 +181,12 @@
     <!-- ============ RESEARCH INTERESTS ============ -->
     <section class="section" id="interests" aria-labelledby="interests-title">
       <h2 class="section-title" id="interests-title">Research Interests</h2>
-      <p class="section-intro interests-list">
-        <span>Urban Economics</span><span class="sep" aria-hidden="true"></span><span>Environmental Economics</span><span class="sep" aria-hidden="true"></span><span>Industrial Organization</span><span class="sep" aria-hidden="true"></span><span>Causal Inference</span>
-      </p>
+      <div class="interests-list">
+        <span class="chip">Urban Economics</span>
+        <span class="chip">Environmental Economics</span>
+        <span class="chip">Industrial Organization</span>
+        <span class="chip">Causal Inference</span>
+      </div>
     </section>
 
     <!-- ============ WORKS IN PROGRESS ============ -->
@@ -440,6 +427,47 @@
         }
       }
       tick();
+    })();
+
+    // Highlight the section anchor in the sticky top header that corresponds
+    // to whichever section currently dominates the viewport. Pure read-only:
+    // toggles aria-current on the nav anchors; styling lives in CSS.
+    (function () {
+      const navLinks = document.querySelectorAll('.site-nav .nav-links a');
+      if (!navLinks.length || !('IntersectionObserver' in window)) return;
+      const linkById = new Map();
+      navLinks.forEach((a) => {
+        const id = (a.getAttribute('href') || '').replace(/^#/, '');
+        if (id) linkById.set(id, a);
+      });
+      let activeId = null;
+      const setActive = (id) => {
+        if (id === activeId) return;
+        activeId = id;
+        navLinks.forEach((a) => a.removeAttribute('aria-current'));
+        const link = linkById.get(id);
+        if (link) link.setAttribute('aria-current', 'true');
+      };
+      const visible = new Map(); // id -> intersectionRatio
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            visible.set(entry.target.id, entry.intersectionRatio);
+          } else {
+            visible.delete(entry.target.id);
+          }
+        });
+        if (!visible.size) return;
+        let bestId = null, bestRatio = -1;
+        visible.forEach((ratio, id) => {
+          if (ratio > bestRatio) { bestRatio = ratio; bestId = id; }
+        });
+        if (bestId) setActive(bestId);
+      }, { rootMargin: '-25% 0px -55% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] });
+      linkById.forEach((_, id) => {
+        const section = document.getElementById(id);
+        if (section) observer.observe(section);
+      });
     })();
   </script>
 </body>

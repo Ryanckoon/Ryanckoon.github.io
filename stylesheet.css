@@ -130,23 +130,32 @@ ul, ol { list-style: none; }
 }
 .skip-link:focus { left: 1rem; top: 1rem; }
 
-/* --- Layout container --- */
+/* --- Layout container ---
+   Top padding is zero so the sticky <nav class="site-nav"> can sit flush
+   with the viewport top. Hero takes its own top space below the nav. */
 .container {
   max-width: 920px;
   margin: 0 auto;
-  padding: var(--space-3xl) var(--space-lg) var(--space-2xl);
+  padding: 0 var(--space-lg) var(--space-2xl);
 }
 
-/* --- Hero --- */
+/* --- Hero (centered, George-Wang-style) --- */
 .hero {
   display: flex;
-  align-items: flex-start;
-  gap: var(--space-xl);
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-lg);
+  padding-top: var(--space-lg);
   padding-bottom: var(--space-2xl);
   border-bottom: 1px solid var(--color-border);
 }
 
-.hero-text { flex: 1; min-width: 0; }
+.hero-text {
+  width: 100%;
+  max-width: 64ch;
+  margin: 0 auto;
+}
 
 .name {
   font-family: var(--font-display-sans);
@@ -195,12 +204,12 @@ ul, ol { list-style: none; }
 .name .mark--hidden  { opacity: 0; }
 .name .mark--visible { opacity: 1; }
 
-/* Thin NUS rule under the hero bio */
+/* Thin NUS rule under the hero bio (centered in v1.7) */
 .hero-rule {
   width: 3rem;
   height: 2px;
   background: var(--color-nus-blue);
-  margin: var(--space-md) 0 var(--space-lg);
+  margin: var(--space-md) auto var(--space-lg);
   border: 0;
 }
 
@@ -208,51 +217,49 @@ ul, ol { list-style: none; }
   font-size: var(--text-body);
   line-height: 1.75;
   color: var(--color-text-secondary);
-  margin-bottom: var(--space-lg);
-  max-width: 60ch;
+  margin-bottom: var(--space-md);
+  text-align: left; /* paragraphs flow left-aligned inside the centered column */
 }
 
-.info-list li {
-  font-size: var(--text-small);
-  color: var(--color-text-secondary);
-  padding: 0.25rem 0;
+/* Identity metadata rendered as inline chips below the hero rule */
+.info-chips {
   display: flex;
-  align-items: baseline;
-  gap: var(--space-sm);
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0 auto var(--space-lg);
 }
-
-.info-label {
-  font-family: var(--font-label);
-  font-size: var(--text-micro);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-text-muted);
-  min-width: 4.5rem;
-  flex-shrink: 0;
+.info-chips .chip a {
+  color: inherit;
+  text-decoration: none;
+}
+.info-chips .chip:hover {
+  border-color: var(--color-nus-blue);
 }
 
 .social-links {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.25rem 1.25rem;
-  margin-top: var(--space-lg);
+  margin-top: var(--space-sm);
   font-style: italic;
   font-size: var(--text-body);
 }
 
 .hero-photo {
   flex-shrink: 0;
-  width: 170px;
+  width: 168px;
 }
 
 .profile-img {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
-  border-radius: var(--radius-md);
+  border-radius: 50%; /* circular in v1.7 — matches centered hero */
   filter: grayscale(8%);
   background: var(--color-border-strong);
+  box-shadow: 0 1px 0 var(--color-border-strong), 0 12px 32px -16px rgba(0, 0, 0, 0.18);
 }
 
 /* Large monogram variant for the hero profile placeholder */
@@ -261,50 +268,99 @@ ul, ol { list-style: none; }
   aspect-ratio: 1;
 }
 
-/* --- Sticky section nav --- */
+/* --- Sticky top header ---
+   Sits above the hero from page load. Brand label on the left,
+   section anchors on the right. Active section gets a thicker
+   underline (driven by aria-current set via IntersectionObserver). */
 .site-nav {
   position: sticky;
   top: 0;
   z-index: 10;
   display: flex;
-  gap: 1.5rem;
-  padding: 0.85rem 0;
+  align-items: baseline;
+  gap: var(--space-md);
+  padding: 0.9rem 0;
+  margin-bottom: var(--space-xl);
   background: var(--color-bg-translucent);
   backdrop-filter: saturate(140%) blur(8px);
   -webkit-backdrop-filter: saturate(140%) blur(8px);
   border-bottom: 1px solid var(--color-border);
+}
+.site-nav .brand {
+  font-family: var(--font-display-sans);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  text-decoration: none;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.site-nav .brand:hover { color: var(--color-nus-blue-hover); }
+.site-nav .brand .brand-mark {
+  color: var(--color-cornell-red);
+  font-weight: 700;
+}
+.site-nav .nav-links {
+  display: flex;
+  gap: 1.4rem;
+  margin-left: auto;
   font-size: var(--text-small);
   font-style: italic;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  min-width: 0;
 }
-.site-nav::-webkit-scrollbar { display: none; }
-.site-nav a {
+.site-nav .nav-links::-webkit-scrollbar { display: none; }
+.site-nav .nav-links a {
   color: var(--color-nus-blue);
   text-decoration: none;
   white-space: nowrap;
   flex-shrink: 0;
   transition: color var(--transition), text-decoration-color var(--transition);
 }
-.site-nav a:hover {
+.site-nav .nav-links a:hover {
   color: var(--color-nus-blue-hover);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
+  text-underline-offset: 0.25em;
+}
+.site-nav .nav-links a[aria-current="true"] {
+  color: var(--color-nus-blue-hover);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.3em;
+  text-decoration-color: var(--color-nus-blue);
 }
 
 /* --- Sections --- */
-.section { padding: var(--space-2xl) 0 0; }
+.section {
+  padding: var(--space-2xl) 0 0;
+  scroll-margin-top: 4.5rem; /* clear the sticky top header on anchor jumps */
+}
 
+/* Section titles: italic Palatino with a short hairline rule to the left.
+   Echoes the underscore-flanked headers on the reference site without
+   resorting to literal '_word_' decoration. */
 .section-title {
-  font-family: var(--font-display-sans);
-  font-size: 1.25rem;
-  font-style: normal;
-  font-weight: 700;
-  letter-spacing: -0.005em;
+  font-family: var(--font-serif);
+  font-size: var(--text-section);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
   margin-bottom: var(--space-lg);
   color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.section-title::before {
+  content: '';
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1px;
+  background: var(--color-text-muted);
 }
 
 .section-intro {
@@ -315,21 +371,13 @@ ul, ol { list-style: none; }
   line-height: 1.75;
 }
 
-/* Research Interests — vertical-line dividers between phrases. */
+/* Research Interests — chip row in v1.7 */
 .interests-list {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 0;
+  gap: 0.4rem;
   max-width: none;
-}
-.interests-list .sep {
-  display: inline-block;
-  width: 1px;
-  height: 0.95em;
-  background: var(--color-border-strong);
-  margin: 0 0.75rem;
-  flex-shrink: 0;
+  margin-bottom: 0;
 }
 
 /* --- News list --- */
@@ -694,11 +742,14 @@ ul, ol { list-style: none; }
 
 /* --- Responsive --- */
 @media (max-width: 640px) {
-  :root { --text-display: 2.1rem; --text-section: 1.35rem; }
-  .container { padding: var(--space-2xl) var(--space-md) var(--space-xl); }
-  .hero { flex-direction: column-reverse; gap: var(--space-lg); }
-  .hero-photo { width: 130px; }
-  .site-nav { gap: 1.1rem; padding: 0.7rem 0; }
+  :root { --text-display: 2.1rem; --text-section: 1.3rem; }
+  .container { padding: 0 var(--space-md) var(--space-xl); }
+  .hero { gap: var(--space-md); padding-top: var(--space-md); }
+  .hero-photo { width: 132px; }
+  .site-nav { padding: 0.7rem 0; margin-bottom: var(--space-lg); }
+  .site-nav .nav-links { gap: 1.05rem; font-size: var(--text-micro); }
+  .site-nav .brand { font-size: 0.92rem; }
+  .section-title::before { width: 1rem; }
   .timeline-item { flex-wrap: wrap; gap: var(--space-md); }
   .timeline-date { width: 100%; padding-top: 0; order: 3; }
   .kv-list { grid-template-columns: 1fr; gap: 0.25rem; }
