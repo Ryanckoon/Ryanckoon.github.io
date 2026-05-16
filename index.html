@@ -391,6 +391,13 @@
           </div>
 
           <form class="contact-form reveal" id="contact-form" novalidate>
+            <!-- Web3Forms wiring: access_key identifies this site's inbox; subject is
+                 personalised at submit time; botcheck is a hidden honeypot field that
+                 only spam bots ever tick. -->
+            <input type="hidden" name="access_key" value="f50b1919-8d61-4352-a1fb-2a4192469553">
+            <input type="hidden" name="subject" value="Website message">
+            <input type="hidden" name="from_name" value="ryanckoon.github.io contact form">
+            <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
             <label>
               <span class="form-label">Your name</span>
               <input type="text" name="name" autocomplete="name" required>
@@ -520,20 +527,23 @@
       });
     })();
 
-    // -- Contact form submit --
-    // Static-site fallback: encode the typed Name/Email/Message into a
-    // mailto: URL and open the visitor's email client. (Swap to a real
-    // form endpoint like Formspree later if a no-redirect path is needed.)
+    // -- Contact form submit (Web3Forms) --
+    // POSTs the typed Name/Email/Message to api.web3forms.com, which forwards
+    // the submission to ruihua.g@u.nus.edu. No page redirect, inline status.
+    // access_key + honeypot are in the form markup; subject is personalised
+    // here so the inbox subject line shows the sender's name.
     (function () {
       const form = document.getElementById('contact-form');
       if (!form) return;
       const status = form.querySelector('.form-status');
+      const button = form.querySelector('button[type="submit"]');
       const setStatus = (text, state) => {
         if (!status) return;
         status.textContent = text;
-        if (state) status.dataset.state = state; else status.removeAttribute('data-state');
+        if (state) status.dataset.state = state;
+        else status.removeAttribute('data-state');
       };
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const data = new FormData(form);
         const name    = (data.get('name')    || '').toString().trim();
@@ -543,10 +553,27 @@
           setStatus('Please fill in your name, email, and message.', 'error');
           return;
         }
-        const subject = encodeURIComponent('Message from ' + name);
-        const body    = encodeURIComponent(message + '\n\n— ' + name + ' (' + email + ')');
-        window.location.href = 'mailto:ruihua.g@u.nus.edu?subject=' + subject + '&body=' + body;
-        setStatus("Opening your email client — I'll reply within 48 hours.", 'ok');
+        data.set('subject', 'Website message from ' + name);
+        setStatus('Sending…', null);
+        if (button) button.disabled = true;
+        try {
+          const resp = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body: data,
+          });
+          const json = await resp.json().catch(() => null);
+          if (resp.ok && json && json.success) {
+            setStatus("Thanks — your message is on its way. I'll reply within 48 hours.", 'ok');
+            form.reset();
+          } else {
+            const msg = (json && json.message) || 'Something went wrong sending the message.';
+            setStatus(msg + " You can also email me directly: ruihua.g@u.nus.edu", 'error');
+          }
+        } catch (err) {
+          setStatus("Couldn't reach the form server. Please email me directly: ruihua.g@u.nus.edu", 'error');
+        } finally {
+          if (button) button.disabled = false;
+        }
       });
     })();
 
