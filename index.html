@@ -59,14 +59,14 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <main id="main" class="container">
-
-    <!-- ============ STICKY TOP HEADER ============ -->
-    <!-- Sits flush at the top of the page from page load and stays pinned while scrolling.
-         Brand label on the left, section anchors on the right. The active link is marked
-         with aria-current="true" by the IntersectionObserver script at the end of <body>. -->
-    <nav class="site-nav" aria-label="Section navigation">
-      <a href="#main" class="brand">Ruihua Guo<span class="brand-mark">.</span></a>
+  <!-- ============ STICKY TOP HEADER ============ -->
+  <!-- Sits flush at viewport top on page load and stays pinned during scroll.
+       Brand on the left, eight section anchors + Contact on the right. The
+       IntersectionObserver at the end of <body> sets aria-current on the
+       active link. -->
+  <nav class="site-nav" aria-label="Section navigation">
+    <div class="site-nav-inner">
+      <a href="#main" class="brand">Ruihua <span class="brand-last">Guo</span><span class="brand-mark">.</span></a>
       <div class="nav-links">
         <a href="#news">News</a>
         <a href="#education">Education</a>
@@ -76,45 +76,308 @@
         <a href="#industry">Industry</a>
         <a href="#awards">Awards</a>
         <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
       </div>
-    </nav>
+    </div>
+  </nav>
+
+  <main id="main">
 
     <!-- ============ HERO ============ -->
-    <!-- Centered hero. Photo on top, name, bio, identity chips, social links.
-         To swap the rotating photos see the JS near the end of <body>. -->
+    <!-- Two-column hero. Left: name, bio paragraphs, NUS rule, 5-row info list.
+         Right: rotating profile photo. Profile rotation JS at end of <body>. -->
     <header class="hero">
-      <div class="hero-photo">
-        <img id="profileImage" alt="Ruihua Guo" class="profile-img"
-             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
-      </div>
+      <div class="hero-inner">
+        <div class="hero-text reveal">
+          <h1 class="name" aria-label="Ruihua Guo"><span class="name-typed" data-text="Ruihua Guo">Ruihua Guo</span><span class="name-caret" aria-hidden="true"></span><span class="mark">.</span></h1>
 
-      <div class="hero-text">
-        <h1 class="name" aria-label="Ruihua Guo"><span class="name-typed" data-text="Ruihua Guo">Ruihua Guo</span><span class="name-caret" aria-hidden="true"></span><span class="mark">.</span></h1>
+          <p class="bio">
+            Hi there! I'm GUO Ruihua 郭瑞华 (<em>pronounced: Kuo Ruey-hwa</em>), and you can call me Ryan. I am a Ph.D. student in Real Estate at the <a href="https://bschool.nus.edu.sg/">NUS Business School</a>, National University of Singapore, supervised by <a href="https://discovery.nus.edu.sg/6283-yi-fan">Prof. Yi FAN</a> and <a href="https://discovery.nus.edu.sg/27191-binglin-wang">Prof. Binglin WANG</a>.
+          </p>
 
-        <p class="bio">
-          Hi there! I'm GUO Ruihua 郭瑞华 (<em>pronounced: Kuo Ruey-hwa</em>), and you can call me Ryan. I am a Ph.D. student in Real Estate at the <a href="https://bschool.nus.edu.sg/">NUS Business School</a>, National University of Singapore, supervised by <a href="https://discovery.nus.edu.sg/6283-yi-fan">Prof. Yi FAN</a> and <a href="https://discovery.nus.edu.sg/27191-binglin-wang">Prof. Binglin WANG</a>.
-        </p>
+          <p class="bio">
+            My research focuses on the intersection of urban and environmental economics. I am currently working on urban challenges, including climate, transport, and housing. I apply data-driven empirical methods, including econometrics, causal inference, and machine learning, to address research questions in these fields.
+          </p>
 
-        <p class="bio">
-          My research focuses on the intersection of urban and environmental economics. I am currently working on urban challenges, including climate, transport, and housing. I apply data-driven empirical methods, including econometrics, causal inference, and machine learning, to address research questions in these fields.
-        </p>
+          <p class="bio">
+            I was born and raised in Anhui. I used to live in Beijing and Ithaca, and now I am living in Singapore.
+          </p>
 
-        <p class="bio">
-          I was born and raised in Anhui. I used to live in Beijing and Ithaca, and now I am living in Singapore.
-        </p>
+          <hr class="hero-rule" aria-hidden="true">
 
-        <hr class="hero-rule" aria-hidden="true">
-
-        <div class="info-chips" aria-label="Affiliation and identity">
-          <span class="chip">Ph.D. in Real Estate</span>
-          <span class="chip"><a href="https://bschool.nus.edu.sg/real-estate/">NUS Business School</a></span>
-          <span class="chip">BIZ 2, Singapore 117592</span>
-          <span class="chip">ruihua.g [at] u.nus.edu</span>
-          <span class="chip">they/them</span>
+          <ul class="info-list">
+            <li><span class="info-label">Program</span> <span>Ph.D. in Real Estate</span></li>
+            <li><span class="info-label">Dept</span> <a href="https://bschool.nus.edu.sg/real-estate/">Department of Real Estate, NUS Business School</a></li>
+            <li><span class="info-label">Office</span> <span>BIZ 2, 1 Business Link, Singapore 117592</span></li>
+            <li><span class="info-label">Email</span> <span>ruihua.g [at] u.nus.edu</span></li>
+            <li><span class="info-label">Pronouns</span> <span>they/them</span></li>
+          </ul>
         </div>
 
-        <nav class="social-links" aria-label="Profiles and links">
-          <a href="mailto:ruihua.g@u.nus.edu">Email</a>
+        <div class="hero-photo reveal">
+          <img id="profileImage" alt="Ruihua Guo" class="profile-img"
+               src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ NEWS ============ -->
+    <section class="section section--plain" id="news" aria-labelledby="news-title">
+      <div class="section-inner">
+        <h2 class="section-title reveal" id="news-title">News</h2>
+        <ul class="news-list reveal">
+          <li>“Weathering the Storm” accepted to the <a href="https://ireus.nus.edu.sg/ireus-urban-housing-symposium-2026/">IREUS Urban Housing Symposium 2026</a>, Poster Session. <time datetime="2026-04">2026</time></li>
+          <li>“Weathering the Storm” accepted to the 2026 CAERE 5th Annual Conference. <time datetime="2026">2026</time></li>
+          <li>“Weathering the Storm” accepted to the 2026 CES China Annual Conference. <time datetime="2026">2026</time></li>
+          <li>Started Ph.D. in Real Estate at NUS Business School. <time datetime="2025-08">2025/08</time></li>
+          <li>Completed M.S. in Applied Economics and Management at Cornell Dyson. <time datetime="2025-06">2025/06</time></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ EDUCATION ============ -->
+    <section class="section section--warm" id="education" aria-labelledby="edu-title">
+      <div class="section-inner">
+        <h2 class="section-title reveal" id="edu-title">Education</h2>
+        <div class="timeline reveal">
+
+          <div class="timeline-item">
+            <img src="images/logo/nus.png" alt="National University of Singapore" class="timeline-logo">
+            <div class="timeline-content">
+              <h3>National University of Singapore</h3>
+              <p class="timeline-role">Ph.D. in Real Estate</p>
+              <p class="timeline-detail">NUS Business School</p>
+            </div>
+            <span class="timeline-date">Aug 2025 &mdash; Present</span>
+          </div>
+
+          <div class="timeline-item">
+            <img src="images/logo/cornell.png" alt="Cornell University" class="timeline-logo">
+            <div class="timeline-content">
+              <h3>Cornell University</h3>
+              <p class="timeline-role">M.S. in Applied Economics and Management</p>
+              <p class="timeline-detail">Charles H. Dyson School</p>
+            </div>
+            <span class="timeline-date">Aug 2023 &mdash; Jun 2025</span>
+          </div>
+
+          <div class="timeline-item">
+            <img src="images/logo/cau.png" alt="China Agricultural University" class="timeline-logo">
+            <div class="timeline-content">
+              <h3>China Agricultural University</h3>
+              <p class="timeline-role">B.Econ. in International Economics and Trade</p>
+              <p class="timeline-detail">College of Economics and Management</p>
+            </div>
+            <span class="timeline-date">Aug 2018 &mdash; Jun 2022</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RESEARCH INTERESTS ============ -->
+    <section class="section section--plain" id="interests" aria-labelledby="interests-title">
+      <div class="section-inner">
+        <h2 class="section-title reveal" id="interests-title">Research Interests</h2>
+        <div class="interests-list reveal">
+          <span class="chip">Urban Economics</span>
+          <span class="chip">Environmental Economics</span>
+          <span class="chip">Industrial Organization</span>
+          <span class="chip">Causal Inference</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WORKS IN PROGRESS ============ -->
+    <section class="section section--warm" id="works" aria-labelledby="works-title">
+      <div class="section-inner">
+        <h2 class="section-title reveal" id="works-title">Works in Progress</h2>
+
+        <div class="pub-list reveal">
+
+          <article class="pub">
+            <div class="pub-content">
+              <h3 class="pub-title">Weathering the Storm: Urban Consumption Responses and Resilience to Tropical Cyclones in China</h3>
+              <p class="pub-authors"><strong>Ruihua Guo</strong>, Binglin Wang</p>
+              <p class="pub-venue">
+                <em>Accepted:</em>
+                IREUS Urban Housing Symposium 2026 (Poster) &middot;
+                CAERE 5th Annual Conference 2026 &middot;
+                CES China Annual Conference 2026
+              </p>
+              <details class="pub-toggle">
+                <summary>Abstract</summary>
+                <p>This study examines how tropical cyclones affect daily urban consumer spending in China. Using China UnionPay transaction data from 2011 to 2018 and a stacked difference-in-differences framework, the analysis traces daily consumption dynamics. Results indicate that cyclone landfall causes a decline in transaction counts and values. Spending recovers within three days, suggesting urban economic resilience. The paper documents intertemporal consumption substitution where residents shift purchases forward in anticipation of storms. This anticipatory response is present in restaurant, supermarket and pharmacy spending. Cities hit during initial landfall show larger consumption responses compared to those affected as storms move inland. These findings demonstrate that early warning systems facilitate household-level adaptive behavior. By enabling pre-storm stockpiling, meteorological forecasts help reduce the economic costs of disaster disruption. This research highlights the role of information infrastructure in urban resilience to extreme weather.</p>
+              </details>
+            </div>
+          </article>
+
+          <article class="pub">
+            <div class="pub-content">
+              <h3 class="pub-title">How Subsidized Shared Transport Shapes Urban Mobility Patterns: Evidence from Cellphone Mobility Data in Los Angeles</h3>
+              <p class="pub-authors"><strong>Ruihua Guo</strong>, Jingwei Zhang, Wengdong Zhang</p>
+              <p class="pub-venue"><em>Working paper</em></p>
+              <details class="pub-toggle">
+                <summary>Abstract</summary>
+                <p>We are studying the impacts of subsidized shared transport services on visitations and consumption of affected POIs in Los Angeles, based on more than 45 million cell phone mobility data from 2018 to 2022, and conducting DiD methods to analyze the causal effects.</p>
+              </details>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TEACHING ============ -->
+    <section class="section section--plain" id="teaching" aria-labelledby="teaching-title">
+      <div class="section-inner">
+        <h2 class="section-title reveal" id="teaching-title">Teaching</h2>
+
+        <div class="teaching-group reveal">
+          <h3>NUS Business School</h3>
+          <ul class="timeline-sub">
+            <li><em>BMS5802 Real Estate Finance</em> &middot; Teaching Assistant &middot; 2026</li>
+            <li><em>RE3701 Real Estate Investment Analysis</em> &middot; Teaching Assistant &middot; 2025</li>
+            <li><em>BMG5104 / RE3905 Economics of Sustainability</em> &middot; Teaching Assistant &middot; 2025</li>
+          </ul>
+        </div>
+
+        <div class="teaching-group reveal">
+          <h3>S.C. Johnson College of Business, Cornell University</h3>
+          <ul class="timeline-sub">
+            <li><em>AEM5275 Introduction to Machine Learning in Business</em> &middot; Course Assistant &middot; 2025</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RESEARCH EXPERIENCE ============ -->
+    <section class="section section--warm" id="research" aria-labelledby="research-title">
+      <div class="section-inner">
+        <h2 class="section-title reveal" id="research-title">Research Experience</h2>
+        <div class="timeline reveal">
+
+          <div class="timeline-item">
+            <img src="images/logo/thu.png" alt="Tsinghua University" class="timeline-logo">
+            <div class="timeline-content">
+              <h3>Institute of Energy, Environment, and Economy, Tsinghua University</h3>
+              <p class="timeline-role">Research Assistant</p>
+            </div>
+            <span class="timeline-date">Oct 2023 &mdash; Jul 2025</span>
+          </div>
+
+          <div class="timeline-item">
+            <img src="images/logo/thu.png" alt="Tsinghua University" class="timeline-logo">
+            <div class="timeline-content">
+              <h3>Energy Internet Research Institute, Tsinghua University</h3>
+              <p class="timeline-role">Carbon Emission Research Intern</p>
+            </div>
+            <span class="timeline-date">Jun 2024 &mdash; Aug 2024</span>
+          </div>
+
+          <div class="timeline-item">
+            <img src="images/logo/cornell.png" alt="Cornell University" class="timeline-logo">
+            <div class="timeline-content">
+              <h3>Cornell Institute for China Economic Research (CICER)</h3>
+              <p class="timeline-role">Winter Research Project</p>
+            </div>
+            <span class="timeline-date">Nov 2021 &mdash; Feb 2022</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ INDUSTRY EXPERIENCE ============ -->
+    <section class="section section--plain" id="industry" aria-labelledby="industry-title">
+      <div class="section-inner">
+        <h2 class="section-title reveal" id="industry-title">Industry Experience</h2>
+        <div class="timeline reveal">
+
+          <div class="timeline-item">
+            <img src="images/logo/fs.png" alt="Frankfurt School of Finance & Management" class="timeline-logo">
+            <div class="timeline-content">
+              <h3>Frankfurt School of Finance &amp; Management</h3>
+              <p class="timeline-role">Assistant Consultant &middot; Development Finance / Green Finance</p>
+            </div>
+            <span class="timeline-date">Aug 2022 &mdash; Aug 2023</span>
+          </div>
+
+          <div class="timeline-item">
+            <img src="images/logo/ruc.png" alt="Renmin University of China" class="timeline-logo">
+            <div class="timeline-content">
+              <h3>Fintech Institute, Renmin University of China</h3>
+              <p class="timeline-role">Research Assistant Intern &middot; Bank Technology Group</p>
+            </div>
+            <span class="timeline-date">Jul 2022 &mdash; Aug 2023</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ AWARDS ============ -->
+    <section class="section section--warm" id="awards" aria-labelledby="awards-title">
+      <div class="section-inner">
+        <h2 class="section-title reveal" id="awards-title">Honors &amp; Awards</h2>
+        <ul class="compact-list reveal">
+          <li>Best 100 Undergraduate Thesis Award, China Agricultural University <span class="year">2022</span></li>
+          <li>First-class Study Scholarship, China Agricultural University <span class="year">2020, 2021</span></li>
+          <li>Study Progress Scholarship, China Agricultural University <span class="year">2020</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="section section--plain" id="skills" aria-labelledby="skills-title">
+      <div class="section-inner">
+        <h2 class="section-title reveal" id="skills-title">Skills &amp; Miscellaneous</h2>
+        <dl class="kv-list reveal">
+          <dt>Programming</dt>
+          <dd>
+            <span class="chip">R</span>
+            <span class="chip">Python</span>
+            <span class="chip">Stata</span>
+            <span class="chip">LaTeX</span>
+          </dd>
+
+          <dt>Software</dt>
+          <dd>
+            <span class="chip">MATLAB</span>
+            <span class="chip">QGIS</span>
+            <span class="chip">SPSS</span>
+          </dd>
+
+          <dt>Languages</dt>
+          <dd>
+            <span class="chip">Chinese (Native)</span>
+            <span class="chip">English (Fluent)</span>
+            <span class="chip">Japanese (Basic)</span>
+          </dd>
+
+          <dt>Hobbies</dt>
+          <dd>
+            <span class="chip">Traveling</span>
+            <span class="chip">Music</span>
+            <span class="chip">Painting</span>
+            <span class="chip">Fitness</span>
+          </dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <!-- Lifted from the hero in v1.8 — mirrors imgeorgewong.github.io's
+         "send a message" CTA at the bottom of the page. -->
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="contact-inner">
+        <h2 class="section-title reveal" id="contact-title">Contact</h2>
+        <p class="contact-intro reveal">Send a message directly &mdash; I'll reply within 48 hours.</p>
+        <div class="contact-actions reveal">
+          <a class="btn btn-primary" href="mailto:ruihua.g@u.nus.edu">Send a message</a>
+          <span class="contact-note">ruihua.g [at] u.nus.edu</span>
+        </div>
+        <nav class="contact-social reveal" aria-label="Other profiles">
           <a href="pdf/CV_Ruihua_Guo.pdf">CV</a>
           <a href="https://www.linkedin.com/in/ruihua-guo-6a8286272/">LinkedIn</a>
           <a href="https://github.com/Ryanckoon">GitHub</a>
@@ -122,258 +385,22 @@
           <a href="blog/">Blog</a>
         </nav>
       </div>
-    </header>
-
-    <!-- ============ NEWS ============ -->
-    <!-- EDIT: add newest items at the top. Keep <time> in YYYY-MM format.
-         Remove oldest when the list grows past ~8 entries. -->
-    <section class="section" id="news" aria-labelledby="news-title">
-      <h2 class="section-title" id="news-title">News</h2>
-      <ul class="news-list">
-        <li>“Weathering the Storm” accepted to the <a href="https://ireus.nus.edu.sg/ireus-urban-housing-symposium-2026/">IREUS Urban Housing Symposium 2026</a>, Poster Session. <time datetime="2026-04">2026</time></li>
-        <li>“Weathering the Storm” accepted to the 2026 CAERE 5th Annual Conference. <time datetime="2026">2026</time></li>
-        <li>“Weathering the Storm” accepted to the 2026 CES China Annual Conference. <time datetime="2026">2026</time></li>
-        <li>Started Ph.D. in Real Estate at NUS Business School. <time datetime="2025-08">2025/08</time></li>
-        <li>Completed M.S. in Applied Economics and Management at Cornell Dyson. <time datetime="2025-06">2025/06</time></li>
-      </ul>
     </section>
-
-    <!-- ============ EDUCATION ============ -->
-    <!-- EDIT: timeline-item blocks. Logos: drop files into images/logo/<school>.png
-         and replace the .timeline-logo--mono div with <img src="images/logo/nus.png" class="timeline-logo" alt="NUS">. -->
-    <section class="section" id="education" aria-labelledby="edu-title">
-      <h2 class="section-title" id="edu-title">Education</h2>
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <img src="images/logo/nus.png" alt="National University of Singapore" class="timeline-logo">
-          <div class="timeline-content">
-            <h3>National University of Singapore</h3>
-            <p class="timeline-role">Ph.D. in Real Estate</p>
-            <p class="timeline-detail">NUS Business School</p>
-          </div>
-          <span class="timeline-date">Aug 2025 &mdash; Present</span>
-        </div>
-
-        <div class="timeline-item">
-          <img src="images/logo/cornell.png" alt="Cornell University" class="timeline-logo">
-          <div class="timeline-content">
-            <h3>Cornell University</h3>
-            <p class="timeline-role">M.S. in Applied Economics and Management</p>
-            <p class="timeline-detail">Charles H. Dyson School</p>
-          </div>
-          <span class="timeline-date">Aug 2023 &mdash; Jun 2025</span>
-        </div>
-
-        <div class="timeline-item">
-          <img src="images/logo/cau.png" alt="China Agricultural University" class="timeline-logo">
-          <div class="timeline-content">
-            <h3>China Agricultural University</h3>
-            <p class="timeline-role">B.Econ. in International Economics and Trade</p>
-            <p class="timeline-detail">College of Economics and Management</p>
-          </div>
-          <span class="timeline-date">Aug 2018 &mdash; Jun 2022</span>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ============ RESEARCH INTERESTS ============ -->
-    <section class="section" id="interests" aria-labelledby="interests-title">
-      <h2 class="section-title" id="interests-title">Research Interests</h2>
-      <div class="interests-list">
-        <span class="chip">Urban Economics</span>
-        <span class="chip">Environmental Economics</span>
-        <span class="chip">Industrial Organization</span>
-        <span class="chip">Causal Inference</span>
-      </div>
-    </section>
-
-    <!-- ============ WORKS IN PROGRESS ============ -->
-    <!-- EDIT: <article class="pub"> blocks. Copy-paste a block to add a new paper. -->
-    <section class="section" id="works" aria-labelledby="works-title">
-      <h2 class="section-title" id="works-title">Works in Progress</h2>
-
-      <div class="pub-list">
-
-        <article class="pub">
-          <div class="pub-content">
-            <h3 class="pub-title">Weathering the Storm: Urban Consumption Responses and Resilience to Tropical Cyclones in China</h3>
-            <p class="pub-authors"><strong>Ruihua Guo</strong>, Binglin Wang</p>
-            <p class="pub-venue">
-              <em>Accepted:</em>
-              IREUS Urban Housing Symposium 2026 (Poster) &middot;
-              CAERE 5th Annual Conference 2026 &middot;
-              CES China Annual Conference 2026
-            </p>
-            <details class="pub-toggle">
-              <summary>Abstract</summary>
-              <p>This study examines how tropical cyclones affect daily urban consumer spending in China. Using China UnionPay transaction data from 2011 to 2018 and a stacked difference-in-differences framework, the analysis traces daily consumption dynamics. Results indicate that cyclone landfall causes a decline in transaction counts and values. Spending recovers within three days, suggesting urban economic resilience. The paper documents intertemporal consumption substitution where residents shift purchases forward in anticipation of storms. This anticipatory response is present in restaurant, supermarket and pharmacy spending. Cities hit during initial landfall show larger consumption responses compared to those affected as storms move inland. These findings demonstrate that early warning systems facilitate household-level adaptive behavior. By enabling pre-storm stockpiling, meteorological forecasts help reduce the economic costs of disaster disruption. This research highlights the role of information infrastructure in urban resilience to extreme weather.</p>
-            </details>
-          </div>
-        </article>
-
-        <article class="pub">
-          <div class="pub-content">
-            <h3 class="pub-title">How Subsidized Shared Transport Shapes Urban Mobility Patterns: Evidence from Cellphone Mobility Data in Los Angeles</h3>
-            <p class="pub-authors"><strong>Ruihua Guo</strong>, Jingwei Zhang, Wengdong Zhang</p>
-            <p class="pub-venue"><em>Working paper</em></p>
-            <details class="pub-toggle">
-              <summary>Abstract</summary>
-              <p>We are studying the impacts of subsidized shared transport services on visitations and consumption of affected POIs in Los Angeles, based on more than 45 million cell phone mobility data from 2018 to 2022, and conducting DiD methods to analyze the causal effects.</p>
-            </details>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- ============ TEACHING ============ -->
-    <!-- EDIT: add a new institution by duplicating a .teaching-group block. -->
-    <section class="section" id="teaching" aria-labelledby="teaching-title">
-      <h2 class="section-title" id="teaching-title">Teaching</h2>
-
-      <div class="teaching-group">
-        <h3>NUS Business School</h3>
-        <ul class="timeline-sub">
-          <li><em>BMS5802 Real Estate Finance</em> &middot; Teaching Assistant &middot; 2026</li>
-          <li><em>RE3701 Real Estate Investment Analysis</em> &middot; Teaching Assistant &middot; 2025</li>
-          <li><em>BMG5104 / RE3905 Economics of Sustainability</em> &middot; Teaching Assistant &middot; 2025</li>
-        </ul>
-      </div>
-
-      <div class="teaching-group">
-        <h3>S.C. Johnson College of Business, Cornell University</h3>
-        <ul class="timeline-sub">
-          <li><em>AEM5275 Introduction to Machine Learning in Business</em> &middot; Course Assistant &middot; 2025</li>
-        </ul>
-      </div>
-
-    </section>
-
-    <!-- ============ RESEARCH EXPERIENCE ============ -->
-    <section class="section" id="research" aria-labelledby="research-title">
-      <h2 class="section-title" id="research-title">Research Experience</h2>
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <img src="images/logo/thu.png" alt="Tsinghua University" class="timeline-logo">
-          <div class="timeline-content">
-            <h3>Institute of Energy, Environment, and Economy, Tsinghua University</h3>
-            <p class="timeline-role">Research Assistant</p>
-          </div>
-          <span class="timeline-date">Oct 2023 &mdash; Jul 2025</span>
-        </div>
-
-        <div class="timeline-item">
-          <img src="images/logo/thu.png" alt="Tsinghua University" class="timeline-logo">
-          <div class="timeline-content">
-            <h3>Energy Internet Research Institute, Tsinghua University</h3>
-            <p class="timeline-role">Carbon Emission Research Intern</p>
-          </div>
-          <span class="timeline-date">Jun 2024 &mdash; Aug 2024</span>
-        </div>
-
-        <div class="timeline-item">
-          <img src="images/logo/cornell.png" alt="Cornell University" class="timeline-logo">
-          <div class="timeline-content">
-            <h3>Cornell Institute for China Economic Research (CICER)</h3>
-            <p class="timeline-role">Winter Research Project</p>
-          </div>
-          <span class="timeline-date">Nov 2021 &mdash; Feb 2022</span>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ============ INDUSTRY EXPERIENCE ============ -->
-    <section class="section" id="industry" aria-labelledby="industry-title">
-      <h2 class="section-title" id="industry-title">Industry Experience</h2>
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <img src="images/logo/fs.png" alt="Frankfurt School of Finance & Management" class="timeline-logo">
-          <div class="timeline-content">
-            <h3>Frankfurt School of Finance &amp; Management</h3>
-            <p class="timeline-role">Assistant Consultant &middot; Development Finance / Green Finance</p>
-          </div>
-          <span class="timeline-date">Aug 2022 &mdash; Aug 2023</span>
-        </div>
-
-        <div class="timeline-item">
-          <img src="images/logo/ruc.png" alt="Renmin University of China" class="timeline-logo">
-          <div class="timeline-content">
-            <h3>Fintech Institute, Renmin University of China</h3>
-            <p class="timeline-role">Research Assistant Intern &middot; Bank Technology Group</p>
-          </div>
-          <span class="timeline-date">Jul 2022 &mdash; Aug 2023</span>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ============ AWARDS ============ -->
-    <section class="section" id="awards" aria-labelledby="awards-title">
-      <h2 class="section-title" id="awards-title">Honors &amp; Awards</h2>
-      <ul class="compact-list">
-        <li>Best 100 Undergraduate Thesis Award, China Agricultural University <span class="year">2022</span></li>
-        <li>First-class Study Scholarship, China Agricultural University <span class="year">2020, 2021</span></li>
-        <li>Study Progress Scholarship, China Agricultural University <span class="year">2020</span></li>
-      </ul>
-    </section>
-
-    <!-- ============ SKILLS / MISC ============ -->
-    <section class="section" id="skills" aria-labelledby="skills-title">
-      <h2 class="section-title" id="skills-title">Skills &amp; Miscellaneous</h2>
-      <dl class="kv-list">
-        <dt>Programming</dt>
-        <dd>
-          <span class="chip">R</span>
-          <span class="chip">Python</span>
-          <span class="chip">Stata</span>
-          <span class="chip">LaTeX</span>
-        </dd>
-
-        <dt>Software</dt>
-        <dd>
-          <span class="chip">MATLAB</span>
-          <span class="chip">QGIS</span>
-          <span class="chip">SPSS</span>
-        </dd>
-
-        <dt>Languages</dt>
-        <dd>
-          <span class="chip">Chinese (Native)</span>
-          <span class="chip">English (Fluent)</span>
-          <span class="chip">Japanese (Basic)</span>
-        </dd>
-
-        <dt>Hobbies</dt>
-        <dd>
-          <span class="chip">Traveling</span>
-          <span class="chip">Music</span>
-          <span class="chip">Painting</span>
-          <span class="chip">Fitness</span>
-        </dd>
-      </dl>
-    </section>
-
-    <!-- ============ FOOTER ============ -->
-    <footer class="site-footer">
-      <p>Last updated: May 2026</p>
-      <p><a href="blog/">Blog</a> &middot; <a href="mailto:ruihua.g@u.nus.edu">Contact</a></p>
-    </footer>
 
   </main>
 
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <p>Last updated: May 2026</p>
+      <p>&copy; 2026 Ruihua Guo &middot; <a href="#contact">Get in touch</a></p>
+    </div>
+  </footer>
+
   <script>
-    // Cycle through profile photos. Each page load (or refresh) picks the next image
-    // in the list, wrapping around at the end. Preference is persisted in localStorage
-    // so you don't see the same photo twice in a row on the same browser.
-    //
-    // To add a new profile photo:
-    //   1. Drop the file into images/profile/
-    //   2. Append its filename here (keep existing order; new photos go at the end).
+    // -- Profile photo rotator --
+    // Each page load picks the next image in `profileImages`, wrapping at the end.
+    // To add: drop file into images/profile/ and append filename below.
     (function () {
       const profileImages = [
         'images/profile/profile.jpg',
@@ -391,32 +418,37 @@
       if (img) img.src = profileImages[next];
     })();
 
-    // Typed-name effect for the hero h1. Honors prefers-reduced-motion: full
-    // text appears instantly, no caret animation. The Cornell-red period is
-    // visible by default in CSS — this script hides it while typing.
+    // -- Typed-name effect with NUS-blue surname swap --
+    // Types "Ruihua Guo" letter-by-letter, then swaps to the final markup
+    // where "Guo" is wrapped in <span class="name-last"> (coloured NUS blue
+    // via CSS). prefers-reduced-motion skips straight to the final state.
     (function () {
       const el = document.querySelector('.name-typed');
       const caret = document.querySelector('.name-caret');
       const mark = document.querySelector('.name .mark');
       if (!el) return;
       const text = el.dataset.text || '';
+      const finalize = () => {
+        el.innerHTML = 'Ruihua <span class="name-last">Guo</span>';
+      };
       const reduce = window.matchMedia &&
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduce) {
-        el.textContent = text;
+        finalize();
         if (caret) caret.style.display = 'none';
         return;
       }
       el.textContent = '';
       if (mark) mark.classList.add('mark--hidden');
       let i = 0;
-      const step = 80; // ms per character — bigger = slower
+      const step = 80; // ms per character
       function tick() {
         if (i <= text.length) {
           el.textContent = text.slice(0, i);
           i += 1;
           setTimeout(tick, step);
         } else {
+          finalize();
           if (mark) {
             mark.classList.remove('mark--hidden');
             mark.classList.add('mark--visible');
@@ -429,9 +461,7 @@
       tick();
     })();
 
-    // Highlight the section anchor in the sticky top header that corresponds
-    // to whichever section currently dominates the viewport. Pure read-only:
-    // toggles aria-current on the nav anchors; styling lives in CSS.
+    // -- Active-section highlight in the sticky nav --
     (function () {
       const navLinks = document.querySelectorAll('.site-nav .nav-links a');
       if (!navLinks.length || !('IntersectionObserver' in window)) return;
@@ -448,14 +478,11 @@
         const link = linkById.get(id);
         if (link) link.setAttribute('aria-current', 'true');
       };
-      const visible = new Map(); // id -> intersectionRatio
+      const visible = new Map();
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            visible.set(entry.target.id, entry.intersectionRatio);
-          } else {
-            visible.delete(entry.target.id);
-          }
+          if (entry.isIntersecting) visible.set(entry.target.id, entry.intersectionRatio);
+          else visible.delete(entry.target.id);
         });
         if (!visible.size) return;
         let bestId = null, bestRatio = -1;
@@ -468,6 +495,30 @@
         const section = document.getElementById(id);
         if (section) observer.observe(section);
       });
+    })();
+
+    // -- Scroll-driven reveals --
+    // Fade-and-rise targets marked with .reveal as they enter the viewport.
+    // One-shot: once revealed, the observer stops watching. prefers-reduced-motion
+    // skips straight to the visible state.
+    (function () {
+      const els = document.querySelectorAll('.reveal');
+      if (!els.length) return;
+      const reduce = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce || !('IntersectionObserver' in window)) {
+        els.forEach((el) => el.classList.add('reveal--visible'));
+        return;
+      }
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal--visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      els.forEach((el) => observer.observe(el));
     })();
   </script>
 </body>
