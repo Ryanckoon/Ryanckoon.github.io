@@ -126,6 +126,20 @@
       </div>
     </header>
 
+    <!-- ============ STICKY SECTION NAV ============ -->
+    <!-- Sits just below the hero in natural flow; sticks to viewport top once scrolled past.
+         Smooth-scroll behavior is enabled globally on <html>. -->
+    <nav class="site-nav" aria-label="Section navigation">
+      <a href="#news">News</a>
+      <a href="#education">Education</a>
+      <a href="#works">Works</a>
+      <a href="#teaching">Teaching</a>
+      <a href="#research">Research</a>
+      <a href="#industry">Industry</a>
+      <a href="#awards">Awards</a>
+      <a href="#skills">Skills</a>
+    </nav>
+
     <!-- ============ NEWS ============ -->
     <!-- EDIT: add newest items at the top. Keep <time> in YYYY-MM format.
          Remove oldest when the list grows past ~8 entries. -->
@@ -326,22 +340,40 @@
       <h2 class="section-title" id="skills-title">Skills &amp; Miscellaneous</h2>
       <dl class="kv-list">
         <dt>Programming</dt>
-        <dd>R &middot; Python &middot; Stata &middot; LaTeX</dd>
+        <dd>
+          <span class="chip">R</span>
+          <span class="chip">Python</span>
+          <span class="chip">Stata</span>
+          <span class="chip">LaTeX</span>
+        </dd>
 
         <dt>Software</dt>
-        <dd>MATLAB &middot; QGIS &middot; SPSS</dd>
+        <dd>
+          <span class="chip">MATLAB</span>
+          <span class="chip">QGIS</span>
+          <span class="chip">SPSS</span>
+        </dd>
 
         <dt>Languages</dt>
-        <dd>Chinese (Native) &middot; English (Fluent) &middot; Japanese (Basic)</dd>
+        <dd>
+          <span class="chip">Chinese (Native)</span>
+          <span class="chip">English (Fluent)</span>
+          <span class="chip">Japanese (Basic)</span>
+        </dd>
 
         <dt>Hobbies</dt>
-        <dd>Traveling &middot; music &middot; painting &middot; fitness</dd>
+        <dd>
+          <span class="chip">Traveling</span>
+          <span class="chip">Music</span>
+          <span class="chip">Painting</span>
+          <span class="chip">Fitness</span>
+        </dd>
       </dl>
     </section>
 
     <!-- ============ FOOTER ============ -->
     <footer class="site-footer">
-      <p>Last updated: April 2026</p>
+      <p>Last updated: May 2026</p>
       <p><a href="blog/">Blog</a> &middot; <a href="mailto:ruihua.g@u.nus.edu">Contact</a></p>
     </footer>
 
