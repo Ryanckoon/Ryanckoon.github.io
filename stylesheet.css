@@ -268,7 +268,7 @@ ul, ol { list-style: none; }
 .hero-text { flex: 1; min-width: 0; }
 .hero-photo {
   flex-shrink: 0;
-  width: 300px;
+  width: 230px;
 }
 .hero-cta {
   display: flex;
@@ -358,7 +358,7 @@ ul, ol { list-style: none; }
   line-height: 1.7;
   color: var(--color-text);
   margin-bottom: var(--space-md);
-  max-width: 62ch;
+  max-width: 74ch;
 }
 
 /* The original 5-row info list — Program / Dept / Office / Email / Pronouns */
