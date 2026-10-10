@@ -17,7 +17,6 @@
     { src: 'images/profile/Profile4.jpg', pos: '54% 45%' },
     { src: 'images/profile/Profile5.jpg', pos: '20% 70%' },
     { src: 'images/profile/Profile6.jpg', pos: '50% 45%' },
-    { src: 'images/profile/Profile7.jpg', pos: '22% 50%' },
   ];
   const key = 'rg.lastProfileIdx';
   let idx = 0;
